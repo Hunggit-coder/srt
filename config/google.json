@@ -1,0 +1,46 @@
+{
+  "_comment": "Cấu hình tự động hóa video whiteboard bằng Google AI. Điền API key vào apiKey, hoặc để trống và dùng biến môi trường GEMINI_API_KEY / GOOGLE_API_KEY.",
+
+  "apiKey": "",
+  "apiVersion": "v1beta",
+  "baseUrl": "https://generativelanguage.googleapis.com",
+
+  "routing": {
+    "_comment": "Chia nhỏ tải theo năng lực model: text nhẹ -> script/plan, ảnh -> image, hiểu ảnh -> vision, giọng đọc -> tts. Đổi tên model tự do theo key bạn được cấp.",
+    "script":      { "model": "gemini-2.5-flash",       "temperature": 0.7 },
+    "plan":        { "model": "gemini-2.5-flash",       "temperature": 0.3 },
+    "image":       { "model": "gemini-2.5-flash-image", "responseModalities": ["IMAGE"] },
+    "vision":      { "model": "gemini-2.5-flash",       "temperature": 0.1 },
+    "tts":         { "model": "gemini-2.5-flash-preview-tts" }
+  },
+
+  "voice": {
+    "_comment": "Giọng đọc TTS. Liệt kê giọng có sẵn: python scripts/google_lib.py --list-voices",
+    "model": "gemini-2.5-flash-preview-tts",
+    "voiceName": "Aoede",
+    "language": "vi-VN",
+    "style": "kể chuyện tự nhiên, tốc độ vừa phải, ấm áp, rõ ràng"
+  },
+
+  "image": {
+    "aspectRatio": "16:9"
+  },
+
+  "limits": {
+    "_comment": "Bảo vệ quota: số lần gọi tối đa mỗi bước, nghỉ giữa các lần gọi, retry khi 429.",
+    "maxImageCalls": 8,
+    "maxVisionCalls": 16,
+    "maxTtsCalls": 12,
+    "sleepBetweenCallsSec": 2.0,
+    "retryMax": 3,
+    "retryBackoffBaseSec": 4.0
+  },
+
+  "scene": {
+    "targetSec": 30,
+    "minSec": 25,
+    "maxSec": 35,
+    "fps": 30,
+    "outputWidth": 1280
+  }
+}

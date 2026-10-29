@@ -26,6 +26,7 @@ VENV_ROOT = SKILL_ROOT / ".venv"
 
 # 解释器导入名 -> pip 安装名
 DEPS: dict[str, str] = {
+    "httpx": "httpx",  # auto_* pipeline: gọi Google REST API mà không cần SDK
     "cv2": "opencv-python",
     "numpy": "numpy",
     "av": "av",  # PyAV：纯 pip 安装的 H.264 编码，无需系统 ffmpeg
