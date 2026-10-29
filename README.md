@@ -22,6 +22,22 @@
 - 支持浏览器预览台调整区域、顺序、时间和字幕关联
 - 支持逐幕渲染与多幕合并，输出完整 MP4
 
+## Cách dùng tự động (1 câu → 1 video hoàn chỉnh)
+
+Nếu bạn có **API key Google AI Studio** và muốn để AI làm toàn bộ — từ ý tưởng,
+tự sinh ảnh nét chì, **tự chọn vùng kể chuyện**, **tự tạo giọng đọc**, đến ghép
+video hoàn chỉnh — hãy xem [AUTO.md](AUTO.md). Tóm tắt một lệnh:
+
+```bash
+export GEMINI_API_KEY="AIza..."          # hoặc điền apiKey vào config/google.json
+./scripts/auto_video.sh "Vì sao mèo luôn đáp đất bằng bốn chân" meocat
+# → assets/whiteboard/meocat/final_video.mp4
+```
+
+Pipeline chia tải sang **nhiều model khác nhau** (text/ảnh/vision/TTS theo
+`config/google.json`) cộng thêm nghỉ giữa các lần gọi + retry khi 429, nên
+không vượt quota của một model duy nhất.
+
 ## 工作方式
 
 该 Skill 的关键在于“字幕驱动、逐步确认”。每一步完成后都等待确认，避免在分镜、线稿或标注尚未定稿时浪费渲染成本：
